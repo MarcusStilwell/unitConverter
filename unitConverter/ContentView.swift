@@ -10,10 +10,28 @@ import SwiftUI
 struct ContentView: View {
     @State private var tempFrom = 0
     @State private var tempTo = 0
-    @State private var tempFromValue = 0.0
     @State private var tempFromValueString = ""
     @State private var newTempValue = 0.0
     var tempUnits = ["Kelvin", "Celsius", "Farenheit"]
+    var valueFromString: Double{
+        return Double(tempFromValueString) ?? 0.0
+    }
+    var convertedValue: Double{
+        var newTemp = 0.0
+        if(tempFrom == 1){
+            newTemp = valueFromString+273
+        }
+        if(tempFrom == 2){
+            newTemp = (((valueFromString-32) * (5/9)) + 273.15)
+        }
+        if(tempTo == 1){
+            newTemp += 273
+        }
+        if(tempTo == 2){
+            newTemp = ((newTemp - 273.15) * (9/5) + 32)
+        }
+        return newTemp
+    }
     var body: some View {
         Form{
             Section{
@@ -35,7 +53,7 @@ struct ContentView: View {
                 }
             }
             Section{
-                Text("\(newTempValue)")
+                Text("\(convertedValue, specifier: "%.2f")")
             }
         }
     }
