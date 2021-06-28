@@ -37,32 +37,37 @@ struct ContentView: View {
         return newTemp
     }
     var body: some View {
-        Form{
-            Section{
-                Picker("Choose a unit to convert from", selection: $tempTo){
-                    ForEach (0 ..< tempUnits.count) {
-                        Text("\(self.tempUnits[$0])")
+        NavigationView{
+            Form{
+                Section{
+                    Picker("Choose a unit to convert from", selection: $tempTo){
+                        ForEach (0 ..< tempUnits.count) {
+                            Text("\(self.tempUnits[$0])")
+                        }
                     }
+                    .pickerStyle(SegmentedPickerStyle())
                 }
-                .pickerStyle(SegmentedPickerStyle())
-            }
-            Section{
-                TextField("Enter a the value for \(tempUnits[tempFrom])", text: $tempFromValueString).keyboardType(.decimalPad)
-                
-            }
-            Section{
-                Picker("Choose a unit to convert to", selection: $tempFrom){
-                    ForEach (0 ..< tempUnits.count) {
-                        Text("\(self.tempUnits[$0])")
+                Section{
+                    TextField("Enter a the value for \(tempUnits[tempFrom])", text: $tempFromValueString).keyboardType(.decimalPad)
+                    
+                }
+                Section{
+                    Picker("Choose a unit to convert to", selection: $tempFrom){
+                        ForEach (0 ..< tempUnits.count) {
+                            Text("\(self.tempUnits[$0])")
+                        }
                     }
+                    .pickerStyle(SegmentedPickerStyle())
                 }
-                .pickerStyle(SegmentedPickerStyle())
+                Section{
+                    Text("\(convertedValue, specifier: "%.2f")")
+                }
             }
-            Section{
-                Text("\(convertedValue, specifier: "%.2f")")
-            }
+            .navigationBarTitle("Temperate Converter")
         }
+        
     }
+    
 }
 
 struct ContentView_Previews: PreviewProvider {
